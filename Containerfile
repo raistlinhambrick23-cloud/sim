@@ -1,20 +1,20 @@
-# Pulls the stable base layer of the official Ubuntu image
+# Pulls the stable base deployment layer of the official Ubuntu image
 FROM ubuntu:26.04
 
-# Avoid prompt deadlocks during container construction phases
+# Avoid prompt block deadlocks during automated container building phases
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Update the mirrors and install core utility background dependencies
+# Update repository mirror nodes and provision package layers cleanly
 RUN apt-get update && apt-get install -y \
     zenity \
     jq \
     curl \
     wget \
     && apt-get clean \
-    rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
-# Automatically copy your custom system configuration scripts inside
+# Automatically copies your custom configurations into the image root layout
 COPY system_files/ /
 
-# Sets execution permissions for your custom kickstart automation script name
+# Enforces execution launch safety permissions for your script
 RUN chmod +x /my-custom-os.ks
