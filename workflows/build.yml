@@ -1,0 +1,26 @@
+name: Build Custom Bazzite ISO
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-iso:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - name: Checkout Repository Source Architecture
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx Environment
+        uses: docker/setup-buildx-action@v3
+
+      - name: Compile and Standardize Custom ISO Environment
+        uses: ublue-os/isogenerator@main
+        with:
+          image-name: 'bazzite-recroom'
+          installer-version: 'stable'
+          architectures: 'x86_64'
